@@ -209,38 +209,6 @@ body {
   text-decoration: none;
 }
 
-/* Navbar Styles */
-.navbar {
-  width: 100%;
-  background-color: rgba(22, 22, 27, 0.6); /* semi-transparent background */
-  padding: 1.5rem 2rem;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  backdrop-filter: blur(10px); /* applies blur to content behind the navbar */
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* subtle border for extra definition */
-}
-
-.navbar ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-}
-.navbar ul li {
-  margin-right: 1.5rem;
-}
-.navbar ul li a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-}
-.navbar ul li a:hover {
-  text-decoration: none;
-}
 
 /* Loader Styles */
 .loader-wrapper {
@@ -624,3 +592,4 @@ body {
 
 
 /* Responsive Auth Page Styles */
+
