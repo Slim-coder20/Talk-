@@ -1,0 +1,49 @@
+/* Room List Page */
+.room-list {
+  padding: 2rem;
+  padding-right: 2rem;
+  background-color: rgba(22, 22, 27, 0.6); /* semi-transparent background */
+  backdrop-filter: blur(10px); /* applies blur to content behind the navbar */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.room-list h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Reset the UL and LI to remove any browser defaults */
+.room-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.room-list ul li {
+  margin-bottom: 0.75rem;
+  padding: 0;
+}
+
+/* Updated button styling for each room link */
+.room-list ul li a {
+  display: block; /* makes the link a block-level element */
+  margin: 0; /* removes any extra margin */
+  padding: 0.75rem 1rem; /* internal spacing */
+  background-color: #4870df; /* base button background color */
+  color: white; /* button text color */
+  text-align: center; /* center the text */
+  text-decoration: none; /* remove default underline */
+  font-size: 16px; /* font size */
+  border-radius: 4px; /* rounded corners */
+  transition: background-color 0.3s ease; /* smooth hover transition */
+}
+
+/* Hover effect for the room buttons */
+.room-list ul li a:hover {
+  background-color: #3c559c; /* darker shade on hover */
+}
