@@ -1,24 +1,51 @@
-/* ---------- Chat Message (Glassy Look) ---------- */
+/* ---------- Chat Message Container ---------- */
 .conv-message-item {
   margin: 1rem 0;
   display: flex;
   flex-direction: column;
-}
-.conv-message-details {
-  font-size: 14px;
-  color: white;
-  margin-top: 0.3rem;
-  text-align: left;
- 
-}
-.conv-message-value {
   padding: 1rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+  transition: box-shadow 0.2s ease;
+  box-sizing: border-box;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.conv-message-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.conv-message-value {
+  padding: 0.875rem 1rem;
   border-radius: 8px;
   font-size: 16px;
-  line-height: 1.4;
-  color: #4870df;
-  max-width: 100%;
- 
+  line-height: 1.5;
+  color: #2c3e50;
+  max-width: 35%;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 1px solid #c7d8e9;
+  margin-bottom: 0.75rem;
+  word-wrap: break-word;
+}
+
+.conv-message-details {
+  font-size: 13px;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.conv-message-details span:first-child {
+  font-weight: 500;
+}
+
+.conv-message-details span:nth-child(2) {
+  color: #adb5bd;
 }
 
 /* Align left/right messages */
@@ -26,13 +53,10 @@
 .conv-message-item--left .conv-message-details {
   align-self: flex-start;
   text-align: left;
-  display: flex;
 }
+
 .conv-message-item--right .conv-message-value,
 .conv-message-item--right .conv-message-details {
   align-self: flex-end;
   text-align: right;
-  display: flex;
-  flex-direction: column;
 }
-

@@ -8,10 +8,17 @@ html,
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  height: 100%;
   background: #ececf0
     url(https://www.toptal.com/designers/subtlepatterns/patterns/nami.png);
   font-family: "Quicksand", sans-serif;
   letter-spacing: -0.23px;
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* ---------- Auth Page Container ---------- */
@@ -226,7 +233,7 @@ body {
 }
 .loader-text {
   color: #4870df;
-  font-weight: bold;
+  font-weight: 300;
 }
 .loader,
 .loader::before,

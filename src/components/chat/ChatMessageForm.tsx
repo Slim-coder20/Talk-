@@ -2,6 +2,7 @@ import { useChatStore } from "../../store/chatStore";
 import { supabase } from "../../supabaseClient";
 import style from "./ChatMessageForm.module.css";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface MessageFormDaata {
   message: string;
@@ -16,6 +17,7 @@ export const ChatMessageForm = () => {
   } = useForm<MessageFormDaata>();
 
   const { currentRoom, user } = useChatStore();
+  const queryClient = useQueryClient();
 
   const onSubmit = async (data: MessageFormDaata) => {
     if (!currentRoom) return;
@@ -31,6 +33,8 @@ export const ChatMessageForm = () => {
       console.error("Erreur lors de l'envoie du message: ", error.message);
     } else {
       reset();
+      // Invalidation du cache React Query pour rafraîchir la liste des messages
+      queryClient.invalidateQueries({ queryKey: ["messages", currentRoom.id] });
     }
   };
   return (
