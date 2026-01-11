@@ -1,0 +1,38 @@
+/* ---------- Chat Message (Glassy Look) ---------- */
+.conv-message-item {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+}
+.conv-message-details {
+  font-size: 14px;
+  color: white;
+  margin-top: 0.3rem;
+  text-align: left;
+ 
+}
+.conv-message-value {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #4870df;
+  max-width: 100%;
+ 
+}
+
+/* Align left/right messages */
+.conv-message-item--left .conv-message-value,
+.conv-message-item--left .conv-message-details {
+  align-self: flex-start;
+  text-align: left;
+  display: flex;
+}
+.conv-message-item--right .conv-message-value,
+.conv-message-item--right .conv-message-details {
+  align-self: flex-end;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+

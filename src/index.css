@@ -209,6 +209,15 @@ body {
   text-decoration: none;
 }
 
+.auth-form-card p button {
+  background: none;
+  border: none;
+  color: #4870df;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 
 /* Loader Styles */
 .loader-wrapper {
@@ -265,138 +274,6 @@ body {
   animation-fill-mode: forwards;
 }
 
-/* Conversation Styles */
-/* ---------- Conversation Container (Centered) ---------- */
-.conv {
-  margin: 2rem auto;
-  max-width: 800px;
-  padding: 1rem;
-  background-color: rgba(22, 22, 27, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  box-shadow: 0 35px 20px -30px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-}
-
-.conv .conv-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: white;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  padding: 0.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  border-bottom: 2px solid rgba(72, 112, 223, 0.8);
-}
-.conv-timeline {
-  height: 400px; /* fixed height */
-  overflow-y: auto; /* enable vertical scrolling when content exceeds height */
-
-  padding-bottom: 1rem;
-}
-
-/* ---------- Chat Message (Glassy Look) ---------- */
-.conv-message-item {
-  margin: 1rem 0;
-  /* Using flex to align the message container */
-  display: flex;
-  flex-direction: column;
-}
-.conv-message-details {
-  font-size: 14px;
-  color: white;
-  margin-top: 0.3rem;
-
-  text-align: right;
-}
-.conv-message-value {
-  padding: 1rem;
-  border-radius: 8px;
-  font-size: 16px;
-  line-height: 1.4;
-  color: white;
-  background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  word-wrap: break-word;
-  max-width: 100%;
-}
-
-/* Align left/right messages */
-.conv-message-item--left .conv-message-value,
-.conv-message-item--left .conv-message-details {
-  align-self: flex-start;
-  text-align: left;
-  display: flex;
-}
-.conv-message-item--right .conv-message-value,
-.conv-message-item--right .conv-message-details {
-  align-self: flex-end;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ---------- Send Message Area (Glassy Input) ---------- */
-.conv-send-message {
-  display: flex;
-  flex-direction: row;
-  /* align-items: center; */
-  padding-top: 2rem;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
-.conv-send-message form {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  /* align-items: center; */
-  /* padding: 1rem; */
-  background-color: rgba(22, 22, 27, 0.6);
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
-.conv-input {
-  flex-grow: 1;
-  /* height: 40px; */
-  border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 16px;
-  font-family: "Quicksand", sans-serif;
-  font-weight: bold;
-  color: white;
-  box-sizing: border-box;
-  transition: background-color 0.3s ease;
-  margin-right: 1rem;
-}
-.conv-input::placeholder {
-  color: #b1b1b1;
-}
-.conv-button {
-  width: 80px;
-  height: 40px;
-  border: none;
-  border-radius: 8px;
-  background-color: #4870df;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.conv-button:hover {
-  background-color: #3c559c;
-}
 
 /* ---------- Optional: Error Text ---------- */
 .error-text {

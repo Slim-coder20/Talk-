@@ -1,18 +1,19 @@
 import { useState } from "react";
-import "../index.css";
-import logo from "../../public/discuter.png";
+import "../../index.css";
+import logo from "../../../public/discuter.png";
 import { useForm } from "react-hook-form";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../supabaseClient";
 import { toast } from "react-toastify";
 
 enum AuthType {
   login = "connexion",
   SignUp = "inscription",
+  resetPassword = "mot de passe oublié",
 }
 
 interface AuthFormData {
   email: string;
-  password: string;
+  password?: string;
 }
 
 const Auth = () => {
@@ -30,13 +31,26 @@ const Auth = () => {
     if (authType === AuthType.login) {
       const { error } = await supabase.auth.signInWithPassword({
         email: data.email,
-        password: data.password,
+        password: data.password || "",
       });
       if (error) setAuthErrorMessage(error.message);
+    } else if (authType === AuthType.resetPassword) {
+      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) {
+        setAuthErrorMessage(error.message);
+        toast.error(error.message);
+      } else {
+        toast.success(
+          "Un email de réinitialisation a été envoyé à votre adresse email"
+        );
+        setAuthType(AuthType.login);
+      }
     } else {
       const { error } = await supabase.auth.signUp({
         email: data.email,
-        password: data.password,
+        password: data.password || "",
       });
       if (error) {
         setAuthErrorMessage(error.message);
@@ -65,7 +79,13 @@ const Auth = () => {
       {/* right conatiner with form */}
       <div className="auth-container-right">
         <div className="auth-form-card">
-          <h2>{authType === AuthType.login ? "Connexion" : "Inscription"}</h2>
+          <h2>
+            {authType === AuthType.login
+              ? "Connexion"
+              : authType === AuthType.resetPassword
+              ? "Mot de passe oublié"
+              : "Inscription"}
+          </h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="email">Email</label>
             <input
@@ -77,31 +97,55 @@ const Auth = () => {
             {errors.email && (
               <p className="error-text">{errors.email.message}</p>
             )}
-            <label htmlFor="password">Mot de passe </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="votre mot de passe "
-              {...register("password", { required: "mot de passe est requis" })}
-            />
-            {errors.password && (
-              <p className="error-text">{errors.password.message}</p>
+            {authType !== AuthType.resetPassword && (
+              <>
+                <label htmlFor="password">Mot de passe </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="votre mot de passe "
+                  {...register("password", {
+                    required: "mot de passe est requis",
+                  })}
+                />
+                {errors.password && (
+                  <p className="error-text">{errors.password.message}</p>
+                )}
+              </>
             )}
             {authErrorMessage && (
               <p className="error-text">{authErrorMessage}</p>
             )}
             {/* Bouton pour soumettre le formulaire */}
             <button type="submit">
-              {authType === AuthType.login ? "Se connecter" : "S'inscrire"}
+              {authType === AuthType.login
+                ? "Se connecter"
+                : authType === AuthType.resetPassword
+                ? "Envoyer le lien de réinitialisation"
+                : "S'inscrire"}
             </button>
           </form>
           <div className="auth-container-right">
-            {/* On créer une condition pour afficher soit inscription ou connexion */}
+            {/* On créer une condition pour afficher soit inscription, connexion ou réinitialisation */}
             {authType === AuthType.login ? (
+              <>
+                <p>
+                  Vous n'avez pas de compte ?{" "}
+                  <button onClick={() => setAuthType(AuthType.SignUp)}>
+                    Inscription
+                  </button>
+                </p>
+                <p style={{ textAlign: "center", marginTop: "0.5rem" }}>
+                  <button onClick={() => setAuthType(AuthType.resetPassword)}>
+                    Mot de passe oublié ?
+                  </button>
+                </p>
+              </>
+            ) : authType === AuthType.resetPassword ? (
               <p>
-                Vous n'avez pas de compte ?{" "}
-                <button onClick={() => setAuthType(AuthType.SignUp)}>
-                  Inscription
+                Vous vous souvenez de votre mot de passe ?{" "}
+                <button onClick={() => setAuthType(AuthType.login)}>
+                  Se connecter
                 </button>
               </p>
             ) : (

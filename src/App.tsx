@@ -1,11 +1,13 @@
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import Auth from "./components/Auth";
+import { Routes, Route, useLocation } from "react-router";
+import Auth from "./components/auth/Auth";
 import { useChatStore } from "./store/chatStore";
 import { supabase } from "./supabaseClient";
 import { useEffect } from "react";
 import { Dashboard } from "./components/Dashboard";
+import { ResetPassword } from "./pages/ResetPassword";
 
 /**
  * Composant principal de l'application
@@ -69,24 +71,43 @@ function App() {
     return () => subscription.unsubscribe();
   }, []); // Tableau de dépendances vide : s'exécute uniquement au montage du composant
 
+  const location = useLocation();
+  const isResetPasswordPage = location.pathname === "/reset-password";
+
   /**
    * Condition de rendu : vérification de l'état d'authentification
    * Si l'utilisateur n'est pas connecté, afficher le composant d'authentification
+   * Exception : la page de réinitialisation de mot de passe est accessible sans être connecté
    */
-  if (!user) {
+  if (!user && !isResetPasswordPage) {
     // Affichage du formulaire de connexion/inscription
-    return <Auth />;
+    return (
+      <>
+        <Routes>
+          <Route path="*" element={<Auth />} />
+        </Routes>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </>
+    );
   }
 
-  return <Dashboard />
-
-  /**
-   * Si l'utilisateur est connecté, afficher l'interface principale de l'application
-   * Actuellement, seul le conteneur de notifications est affiché
-   * (l'interface de chat sera ajoutée plus tard)
-   */
   return (
     <>
+      <Routes>
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="*" element={<Dashboard />} />
+      </Routes>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}

@@ -1,0 +1,60 @@
+
+/* ---------- Send Message Area (Glassy Input) ---------- */
+.conv-send-message {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  padding-top: 2rem;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.conv-send-message form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* align-items: center; */
+  /* padding: 1rem; */
+  background-color: rgba(22, 22, 27, 0.6);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.conv-input {
+  flex-grow: 1;
+  /* height: 40px; */
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 16px;
+  font-family: "Quicksand", sans-serif;
+  color:#4870df;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+  margin-right: 1rem;
+}
+.conv-input::focus {
+  color: #b1b1b1;
+  outline: none;
+}
+.conv-input::placeholder {
+  color: #b1b1b1;
+}
+.conv-button {
+  width: 80px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4870df;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.conv-button:hover {
+  background-color: #3c559c;
+}
