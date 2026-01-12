@@ -1,49 +1,89 @@
-/* Room List Page */
-.room-list {
-  padding: 2rem;
-  padding-right: 2rem;
-  background-color: rgba(22, 22, 27, 0.6); /* semi-transparent background */
-  backdrop-filter: blur(10px); /* applies blur to content behind the navbar */
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  max-width: 600px;
+/* ---------- Room List Container ---------- */
+.room-list-container {
   margin: 2rem auto;
+  max-width: 800px;
+  padding: 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
 }
 
-.room-list h2 {
-  color: white;
-  text-align: center;
+/* ---------- Room List Header ---------- */
+.room-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 
-/* Reset the UL and LI to remove any browser defaults */
-.room-list ul {
+.room-list-title-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.room-list-title-left img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.room-list-title-left h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0984e3;
+}
+
+/* ---------- Room List Content ---------- */
+.room-list-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.room-list-items {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.room-list ul li {
-  margin-bottom: 0.75rem;
-  padding: 0;
+.room-list-item {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
 }
 
-/* Updated button styling for each room link */
-.room-list ul li a {
-  display: block; /* makes the link a block-level element */
-  margin: 0; /* removes any extra margin */
-  padding: 0.75rem 1rem; /* internal spacing */
-  background-color: #4870df; /* base button background color */
-  color: white; /* button text color */
-  text-align: center; /* center the text */
-  text-decoration: none; /* remove default underline */
-  font-size: 16px; /* font size */
-  border-radius: 4px; /* rounded corners */
-  transition: background-color 0.3s ease; /* smooth hover transition */
+.room-list-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+  border-color: #4870df;
 }
 
-/* Hover effect for the room buttons */
-.room-list ul li a:hover {
-  background-color: #3c559c; /* darker shade on hover */
+.room-list-link {
+  display: block;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.room-list-link:hover {
+  color: #4870df;
 }

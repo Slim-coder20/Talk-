@@ -14,7 +14,7 @@ interface ChatStore {
 }
 
 // Interface du salon de chat dans le store ChatStore //
-interface Room {
+export interface Room {
   id: number;
   name: string;
 }
