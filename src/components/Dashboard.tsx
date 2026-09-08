@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router";
 import { ChatRoom } from "../pages/ChatRoom";
 import { CreateRoom } from "../pages/CreateRoom";
 import { RoomList } from "../pages/RoomList";
+import { Messages } from "../pages/Messages";
 import { Navbar } from "./Navbar";
 import { NavbarMobile } from "./NavbarMobile";
 import "../components/Navbar.module.css";
@@ -27,6 +28,7 @@ export const Dashboard = () => {
         <Route path="/" element={<ChatRoom />} />
         <Route path="/rooms" element={<RoomList />} />
         <Route path="/create-room" element={<CreateRoom />} />
+        <Route path="/messages" element={<Messages />} />
       </Routes>
     </section>
   );

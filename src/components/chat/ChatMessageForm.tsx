@@ -18,13 +18,13 @@ export const ChatMessageForm = () => {
     reset, // Fonction pour réinitialiser le formulaire après soumission
   } = useForm<MessageFormDaata>();
 
-  // Récupération de la salle de chat actuelle et de l'utilisateur depuis le store Zustand
-  const { currentRoom, user } = useChatStore();
+  // Récupération de la discussion active (salon ou conversation privée) et de l'utilisateur depuis le store Zustand
+  const { currentChat, user } = useChatStore();
 
   // Fonction asynchrone exécutée lors de la soumission du formulaire
   const onSubmit = async (data: MessageFormDaata) => {
-    // Si aucune salle n'est sélectionnée ou pas d'utilisateur connecté, on ne fait rien
-    if (!currentRoom || !user) return;
+    // Si aucune discussion n'est active ou pas d'utilisateur connecté, on ne fait rien
+    if (!currentChat || !user) return;
 
     // Récupération du fichier éventuellement sélectionné (FileList -> premier fichier)
     const file = data.file?.[0];
@@ -58,13 +58,20 @@ export const ChatMessageForm = () => {
       attachmentType = file.type.startsWith("video/") ? "video" : "image";
     }
 
+    // On renseigne room_id OU conversation_id selon le type de discussion active
+    // (l'autre colonne reste absente du payload, donc NULL en base, conformément à la contrainte)
+    const targetColumn =
+      currentChat.type === "room"
+        ? { room_id: currentChat.id }
+        : { conversation_id: currentChat.id };
+
     // Insertion du nouveau message dans la table messages de Supabase
     const { error } = await supabase.from("messages").insert([
       {
         content: data.message, // Contenu du message saisi par l'utilisateur
         user_id: user.id, // ID de l'utilisateur qui envoie le message
         email: user.email, // Email de l'utilisateur qui envoie le message
-        room_id: currentRoom.id, // ID de la salle de chat où le message est envoyé
+        ...targetColumn, // room_id ou conversation_id selon le contexte
         attachment_url: attachmentUrl, // URL du fichier joint, ou null si aucun
         attachment_type: attachmentType, // "image" | "video" | null
       },

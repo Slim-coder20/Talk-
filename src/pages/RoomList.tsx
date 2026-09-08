@@ -31,10 +31,12 @@ export const RoomList = () => {
   });
 
   // Fonction pour rejoindre un salon sélectionné
-  // Met à jour le store Zustand avec le salon sélectionné comme salle actuelle
+  // Met à jour le store Zustand avec le salon sélectionné comme discussion active
   const handleJoinRoom = (room: Room) => {
     // Utilisation de getState() pour accéder aux actions du store en dehors d'un composant
-    useChatStore.getState().setCurrentRoom(room);
+    useChatStore
+      .getState()
+      .setCurrentChat({ type: "room", id: room.id, name: room.name });
   };
 
   // Affichage d'un message de chargement pendant la récupération des données

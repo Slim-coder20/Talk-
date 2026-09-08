@@ -1,4 +1,4 @@
-import { useChatStore } from "../../store/chatStore";
+import { useChatStore, type ChatTarget } from "../../store/chatStore";
 import { supabase } from "../../supabaseClient";
 import style from "./ChatMessage.module.css";
 import "../../index.css";
@@ -6,24 +6,29 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 // Interface définissant la structure d'un message
+// room_id et conversation_id sont mutuellement exclusifs (contrainte en base) :
+// un message appartient soit à un salon public, soit à une conversation privée
 interface Message {
   id: number;
   content: string;
   user_id: string;
   email: string;
   created_at: string;
-  room_id: number;
+  room_id: number | null;
+  conversation_id: number | null;
   attachment_url: string | null;
   attachment_type: "image" | "video" | null;
 }
 
-// Fonction asynchrone pour récupérer les messages d'une salle de chat depuis Supabase
-async function fetchMessages(roomId: number): Promise<Message[]> {
-  // Récupération des messages filtrés par room_id et triés par date de création
+// Fonction asynchrone pour récupérer les messages d'un salon OU d'une conversation privée depuis Supabase
+async function fetchMessages(target: ChatTarget): Promise<Message[]> {
+  // On filtre sur la bonne colonne selon le type de discussion
+  const column = target.type === "room" ? "room_id" : "conversation_id";
+
   const { data, error } = await supabase
     .from("messages")
     .select("*")
-    .eq("room_id", roomId)
+    .eq(column, target.id)
     .order("created_at", { ascending: true });
 
   // Si une erreur survient, on la propage
@@ -32,8 +37,8 @@ async function fetchMessages(roomId: number): Promise<Message[]> {
 }
 
 export const ChatMessage = () => {
-  // Récupération de la salle de chat actuelle depuis le store Zustand
-  const { currentRoom, user } = useChatStore();
+  // Récupération de la discussion active (salon ou conversation privée) depuis le store Zustand
+  const { currentChat, user } = useChatStore();
   const queryClient = useQueryClient();
   // Utilisation de React Query pour gérer le chargement et le cache des messages
   const {
@@ -41,21 +46,18 @@ export const ChatMessage = () => {
     error,
     isLoading,
   } = useQuery<Message[], Error>({
-    // Clé de requête basée sur l'ID de la salle actuelle
-    queryKey: ["messages", currentRoom?.id],
-    // Fonction de récupération des messages (retourne un tableau vide si pas de salle)
-    queryFn: () =>
-      currentRoom?.id === null
-        ? Promise.resolve([])
-        : fetchMessages(currentRoom!.id),
-    // La requête ne s'exécute que si une salle est sélectionnée
-    enabled: currentRoom?.id !== null,
+    // Clé de requête basée sur le type et l'ID de la discussion active
+    queryKey: ["messages", currentChat?.type, currentChat?.id],
+    // Fonction de récupération des messages (retourne un tableau vide si aucune discussion active)
+    queryFn: () => (currentChat ? fetchMessages(currentChat) : Promise.resolve([])),
+    // La requête ne s'exécute que si une discussion est active
+    enabled: currentChat !== null,
   });
 
   // useEffect pour écouter les nouveaux messages en temps réel depuis Supabase Realtime
   useEffect(() => {
-    // Si aucune salle n'est sélectionnée, on ne fait rien
-    if (!currentRoom?.id) return;
+    // Si aucune discussion n'est active, on ne fait rien
+    if (!currentChat) return;
 
     // Création d'un canal Supabase Realtime pour écouter les changements de la base de données
     // Le nom du canal doit être unique pour éviter les conflits avec d'autres abonnements
@@ -75,13 +77,18 @@ export const ChatMessage = () => {
           // Récupération du nouveau message depuis les données de l'événement
           const newMessage = payload.new as Message;
 
-          // Vérification que le nouveau message appartient bien à la salle actuellement affichée
-          // Cela évite d'ajouter des messages d'autres salles dans la liste
-          if (newMessage.room_id === currentRoom.id) {
+          // Vérification que le nouveau message appartient bien à la discussion actuellement affichée
+          // (comparaison sur room_id pour un salon, conversation_id pour une conversation privée)
+          const belongsToCurrentChat =
+            currentChat.type === "room"
+              ? newMessage.room_id === currentChat.id
+              : newMessage.conversation_id === currentChat.id;
+
+          if (belongsToCurrentChat) {
             // Mise à jour du cache React Query avec le nouveau message
             // Cette fonction met à jour les données en cache sans refaire une requête HTTP
             queryClient.setQueryData<Message[]>(
-              ["messages", currentRoom?.id], // Clé de la requête à mettre à jour
+              ["messages", currentChat.type, currentChat.id], // Clé de la requête à mettre à jour
               // Fonction qui reçoit les anciens messages et retourne les nouveaux messages mis à jour
               (oldMessages) =>
                 // Si des messages existent déjà, on ajoute le nouveau message à la fin
@@ -99,13 +106,13 @@ export const ChatMessage = () => {
         console.log("Sub status:", status);
       });
 
-    // Fonction de nettoyage exécutée quand le composant est démonté ou quand currentRoom?.id change
+    // Fonction de nettoyage exécutée quand le composant est démonté ou quand la discussion active change
     // Cela permet de se désabonner du canal pour éviter les fuites mémoire et les connexions inutiles
     return () => {
       // Désabonnement du canal Supabase
       supabase.removeChannel(channel);
     };
-  }, [currentRoom?.id, queryClient]); // Dépendances : le useEffect se réexécute si currentRoom?.id ou queryClient change
+  }, [currentChat?.type, currentChat?.id, queryClient]); // Dépendances : le useEffect se réexécute si le type ou l'ID de la discussion change
 
   // Affichage d'un message de chargement pendant la récupération des données
   if (isLoading)

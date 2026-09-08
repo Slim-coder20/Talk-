@@ -29,6 +29,9 @@ export const Navbar = () => {
         <li>
           <Link to="/create-room">Créer une nouvelle salon</Link>
         </li>
+        <li>
+          <Link to="/messages">Messages privés</Link>
+        </li>
       </ul>
       <div className={style["navbar-container-right-auth"]}>
         <button

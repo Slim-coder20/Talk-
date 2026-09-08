@@ -44,9 +44,11 @@ export const CreateRoom = () => {
     } else {
       // Si la création réussit, on récupère le salon créé (premier élément du tableau)
       const room = newRoom[0];
-      // Mise à jour du store Zustand avec le nouveau salon comme salle actuelle
+      // Mise à jour du store Zustand avec le nouveau salon comme discussion active
       // Utilisation de getState() pour accéder aux actions du store en dehors d'un composant
-      useChatStore.getState().setCurrentRoom({ id: room.id, name: room.name });
+      useChatStore
+        .getState()
+        .setCurrentChat({ type: "room", id: room.id, name: room.name });
       // Navigation vers la page principale (salon de discussion) après création réussie
       navigate("/");
     }

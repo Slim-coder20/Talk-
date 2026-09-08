@@ -5,13 +5,13 @@ import { ChatMessage } from "../components/chat/ChatMessage";
 import { ChatMessageForm } from "../components/chat/ChatMessageForm";
 
 export const ChatRoom = () => {
-  const { user, currentRoom } = useChatStore();
+  const { user, currentChat } = useChatStore();
 
-  // On créé une condition si le salon est null, on affiche un message qui demande de rejoindre u salon ou de créer un salon//
-  if (currentRoom === null) {
+  // On créé une condition si aucune discussion n'est active, on demande de rejoindre un salon ou de démarrer une conversation //
+  if (currentChat === null) {
     return (
       <div className={style.conv}>
-        <h2>Veuillez rejoindre un salon ou créer un salon</h2>
+        <h2>Veuillez rejoindre un salon ou démarrer une conversation</h2>
       </div>
     );
   }
@@ -21,7 +21,7 @@ export const ChatRoom = () => {
         <div className={style["conv-title-left"]}>
           <img src={logo} alt="logo" />
           <h2>
-            {currentRoom.name} - {user?.email}
+            {currentChat.name} - {user?.email}
           </h2>
         </div>
       </div>

@@ -82,6 +82,12 @@
   font-size: 1rem;
   font-weight: 500;
   transition: color 0.2s ease;
+  /* Resets pour pouvoir réutiliser cette classe sur un <button> (page Messages) */
+  border: none;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 .room-list-link:hover {

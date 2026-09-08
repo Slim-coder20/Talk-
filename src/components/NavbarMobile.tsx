@@ -72,6 +72,11 @@ export const NavbarMobile = () => {
               Créer une nouvelle salon
             </Link>
           </li>
+          <li>
+            <Link to="/messages" onClick={closeMenu}>
+              Messages privés
+            </Link>
+          </li>
           <li className={style["mobile-menu-logout"]}>
             <button
               onClick={handleLogout}
