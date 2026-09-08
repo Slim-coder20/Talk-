@@ -13,6 +13,8 @@ interface Message {
   email: string;
   created_at: string;
   room_id: number;
+  attachment_url: string | null;
+  attachment_type: "image" | "video" | null;
 }
 
 // Fonction asynchrone pour récupérer les messages d'une salle de chat depuis Supabase
@@ -146,6 +148,20 @@ export const ChatMessage = () => {
         return (
           <div key={msg.id} className={`${baseClass} ${modifierClass}`}>
             <div className={style["conv-message-value"]}>{msg.content}</div>
+            {msg.attachment_url && msg.attachment_type === "image" && (
+              <img
+                src={msg.attachment_url}
+                alt="Pièce jointe"
+                className={style["conv-message-attachment"]}
+              />
+            )}
+            {msg.attachment_url && msg.attachment_type === "video" && (
+              <video
+                src={msg.attachment_url}
+                controls
+                className={style["conv-message-attachment"]}
+              />
+            )}
             <div className={style["conv-message-details"]}>
               <span>{formatDate(msg.created_at)}</span>
               <span>•</span>

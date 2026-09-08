@@ -31,6 +31,14 @@
   word-wrap: break-word;
 }
 
+.conv-message-attachment {
+  max-width: 320px;
+  max-height: 320px;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
 .conv-message-details {
   font-size: 13px;
   color: #6c757d;
@@ -50,12 +58,14 @@
 
 /* Align left/right messages */
 .conv-message-item--left .conv-message-value,
+.conv-message-item--left .conv-message-attachment,
 .conv-message-item--left .conv-message-details {
   align-self: flex-start;
   text-align: left;
 }
 
 .conv-message-item--right .conv-message-value,
+.conv-message-item--right .conv-message-attachment,
 .conv-message-item--right .conv-message-details {
   align-self: flex-end;
   text-align: right;

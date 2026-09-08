@@ -42,6 +42,30 @@
 .conv-input::placeholder {
   color: #b1b1b1;
 }
+.conv-file-input {
+  display: flex;
+  align-items: center;
+  max-width: 170px;
+  color: #b1b1b1;
+  font-size: 13px;
+  font-family: "Quicksand", sans-serif;
+  margin-right: 1rem;
+}
+.conv-file-input::file-selector-button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-right: 0.75rem;
+  background-color: #4870df;
+  color: white;
+  font-family: "Quicksand", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.conv-file-input::file-selector-button:hover {
+  background-color: #3c559c;
+}
 .conv-button {
   width: 80px;
   height: 40px;
