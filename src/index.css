@@ -225,6 +225,36 @@ body {
   text-decoration: none;
 }
 
+/* Sur mobile, la grille 2 colonnes ne rétrécit jamais sous la taille de son contenu
+   (le titre à 56px notamment) : on empile les deux colonnes verticalement */
+@media (max-width: 900px) {
+  .auth-container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "left"
+      "right";
+    gap: 1.5rem;
+    padding: 1.5rem;
+    min-height: auto;
+    margin: 2rem auto;
+  }
+
+  .auth-container-left {
+    padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .auth-container-left h1 {
+    font-size: 36px;
+    justify-content: center;
+  }
+
+  .auth-container-left p {
+    text-align: center;
+  }
+}
+
 
 /* Loader Styles */
 .loader-wrapper {

@@ -1,26 +1,20 @@
 
 /* ---------- Send Message Area (Glassy Input) ---------- */
+/* Le <form> porte directement cette classe (pas de <form> imbriqué à l'intérieur) */
 .conv-send-message {
   display: flex;
   flex-direction: row;
-  /* align-items: center; */
-  padding-top: 2rem;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
-.conv-send-message form {
-  display: flex;
-  flex-direction: row;
+  align-items: center;
   width: 100%;
-  /* align-items: center; */
-  /* padding: 1rem; */
-  background-color: rgba(22, 22, 27, 0.6);
+  padding-top: 2rem;
+  background-color: rgba(72, 112, 223, 0.12);
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+  box-sizing: border-box;
 }
 .conv-input {
   flex-grow: 1;
-  /* height: 40px; */
+  min-width: 0; /* essentiel : sans ça un input flex ne peut jamais rétrécir sous sa largeur de contenu */
   border: none;
   padding: 0.75rem 1rem;
   border-radius: 8px;
@@ -45,6 +39,8 @@
 .conv-file-input {
   display: flex;
   align-items: center;
+  height: 40px;
+  box-sizing: border-box;
   max-width: 170px;
   color: #b1b1b1;
   font-size: 13px;
@@ -83,3 +79,29 @@
   background-color: #3c559c;
 }
 
+/* Sur petit écran, le texte natif du bouton fichier ("Choisir un fichier") est dessiné
+   par le navigateur : impossible à raccourcir en CSS. On préfère passer sur 2 lignes :
+   le champ texte prend toute la largeur, les 2 boutons se partagent la ligne du dessous */
+@media (max-width: 480px) {
+  .conv-send-message {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .conv-input {
+    flex: 1 1 100%;
+    margin-right: 0;
+  }
+
+  .conv-file-input {
+    flex: 1 1 auto;
+    max-width: none;
+    margin-right: 0.5rem;
+  }
+
+  .conv-button {
+    width: 70px;
+    flex-shrink: 0;
+  }
+}

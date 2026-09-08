@@ -64,3 +64,18 @@
 .conv-set-message {
   flex-shrink: 0;
 }
+
+/* Sur mobile, on réduit les marges pour garder un maximum de hauteur utile
+   pour la conversation (écran déjà réduit par le clavier virtuel) */
+@media (max-width: 600px) {
+  .conv {
+    margin: 0.5rem auto;
+    padding: 0.5rem;
+    height: calc(100vh - 1rem);
+    max-height: calc(100vh - 1rem);
+  }
+
+  .conv-title-left h2 {
+    font-size: 1rem;
+  }
+}
